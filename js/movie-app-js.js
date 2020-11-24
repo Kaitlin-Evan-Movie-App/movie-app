@@ -32,7 +32,38 @@ const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     })
     .catch(console.error);
 
+const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
+    method: "DELETE",
+    headers: {
+        "Content-Type": "application/json",
+    },
+})
+    .then(result => result.json())
+    .then(() => {
+        console.log((`Success: deleted movie with id of ${id}`));
+    })
+    .catch(console.error);
 
+const addMovie = (movie) => fetch(`${url}`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    }
+})
+    .then(result => result.json())
+    .then(data => {
+        console.log(`Success: created ${JSON.stringify(data)}`);
+    })
+    .catch(console.error);
+
+getMovies().then(movies => {
+    let html = '<ul>';
+    for (let movie of movies) {
+        html += `<li>${movie.title}</li>`
+    }
+    html += '</ul>';
+    document.write(html)
+})
 
 
 getMovies().then(console.log);
