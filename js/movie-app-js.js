@@ -20,6 +20,8 @@ const getSingleMovie = (id) => fetch(`${url}/${id}`)
     .then(result => result.json())
     .catch(console.error);
 
+
+
 const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     method: "PUT",
     headers: {
@@ -33,6 +35,8 @@ const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     })
     .catch(console.error);
 
+
+
 const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     method: "DELETE",
     headers: {
@@ -44,6 +48,8 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
         console.log((`Success: deleted movie with id of ${id}`));
     })
     .catch(console.error);
+
+
 
 const addMovie = (movie) => fetch(`${url}`, {
     method: "POST",
@@ -57,6 +63,8 @@ const addMovie = (movie) => fetch(`${url}`, {
     })
     .catch(console.error);
 
+
+
 getMovies().then(movies => {
     let movieHtml = '<div class="album py-5 bg-dark">\n' +
         '        <div class="container">\n' +
@@ -68,12 +76,12 @@ getMovies().then(movies => {
                         <div class="card-body">
                             <p class="card-text">${movie.title}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal">View</button>
-                                <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel" aria-hidden="true">
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal${movie.id}">View</button>
+                                <div class="modal fade" id="movieModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="movieModal${movie.id}Label" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="movieModalLabel">${movie.title}</h5>
+                                                <h5 class="modal-title" id="movieModal${movie.id}Label">${movie.title}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -88,12 +96,12 @@ getMovies().then(movies => {
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">Edit</button>
-                                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal${movie.id}">Edit</button>
+                                    <div class="modal fade" id="editModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="editModal${movie.id}Label" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel">Movie Title</h5>
+                                                    <h5 class="modal-title" id="editModal${movie.id}Label">${movie.title}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -101,21 +109,21 @@ getMovies().then(movies => {
                                                 <div class="modal-body">
                                                     <p>See something wrong? Make it right!</p>
                                                     <form class="input-group">
-                                                        <input type="text" class="form-control form-control-sm" placeholder="Edit movie info" aria-label="Edit Movie" aria-describedby="basic-addon2">
+                                                        <input id="edit-title-${movie.id}" type="text" class="form-control form-control-sm" placeholder="Edit movie title" aria-label="Edit Movie" aria-describedby="basic-addon2">
                                                     </form>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-sm btn-warning">Save changes</button>
+                                                        <button id ="save-changes-btn-${movie.id}" type="button" class="btn btn-sm btn-warning save-changes">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal${movie.id}">Delete</button>
+                                    <div class="modal fade" id="deleteModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModal${movie.id}Label" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel">Movie Title</h5>
+                                                    <h5 class="modal-title" id="deleteModal${movie.id}Label">${movie.title}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -138,10 +146,6 @@ getMovies().then(movies => {
                 </div>`
     }
     movieHtml += '</div>';
-
-
-
-
 
     $("#movie-div").html(movieHtml);
     renderHeader();
@@ -224,7 +228,12 @@ const renderFooter = () => {
     $("#footer-div").html(footerHtml);
 }
 
+$(".save-changes").click(function(e){
+    editMovie()
+    }
+);
 
 getMovies().then(console.log);
+
 // getSingleMovie(3).then(console.log);
 // editMovie(2).then(console.log);
