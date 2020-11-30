@@ -68,12 +68,12 @@ getMovies().then(movies => {
                         <div class="card-body">
                             <p class="card-text">${movie.title}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal">View</button>
-                                <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel" aria-hidden="true">
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal${movie.id}">View</button>
+                                <div class="modal fade" id="movieModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="movieModal${movie.id}Label" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="movieModalLabel">${movie.title}</h5>
+                                                <h5 class="modal-title" id="movieModal${movie.id}Label">${movie.title}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -88,12 +88,12 @@ getMovies().then(movies => {
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">Edit</button>
-                                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal${movie.id}">Edit</button>
+                                    <div class="modal fade" id="editModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="editModal${movie.id}Label" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel">Movie Title</h5>
+                                                    <h5 class="modal-title" id="editModal${movie.id}Label">Movie Title</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -110,12 +110,12 @@ getMovies().then(movies => {
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal${movie.id}">Delete</button>
+                                    <div class="modal fade" id="deleteModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModal${movie.id}Label" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel">Movie Title</h5>
+                                                    <h5 class="modal-title" id="deleteModal${movie.id}Label">Movie Title</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
