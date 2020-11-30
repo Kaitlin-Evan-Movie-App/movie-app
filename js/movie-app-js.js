@@ -20,6 +20,8 @@ const getSingleMovie = (id) => fetch(`${url}/${id}`)
     .then(result => result.json())
     .catch(console.error);
 
+
+
 const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     method: "PUT",
     headers: {
@@ -33,6 +35,8 @@ const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     })
     .catch(console.error);
 
+
+
 const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     method: "DELETE",
     headers: {
@@ -45,6 +49,8 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     })
     .catch(console.error);
 
+
+
 const addMovie = (movie) => fetch(`${url}`, {
     method: "POST",
     headers: {
@@ -56,6 +62,8 @@ const addMovie = (movie) => fetch(`${url}`, {
         console.log(`Success: created ${JSON.stringify(data)}`);
     })
     .catch(console.error);
+
+
 
 getMovies().then(movies => {
     let movieHtml = '<div class="album py-5 bg-dark">\n' +
@@ -93,7 +101,7 @@ getMovies().then(movies => {
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModal${movie.id}Label">Movie Title</h5>
+                                                    <h5 class="modal-title" id="editModal${movie.id}Label">${movie.title}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -101,10 +109,10 @@ getMovies().then(movies => {
                                                 <div class="modal-body">
                                                     <p>See something wrong? Make it right!</p>
                                                     <form class="input-group">
-                                                        <input type="text" class="form-control form-control-sm" placeholder="Edit movie info" aria-label="Edit Movie" aria-describedby="basic-addon2">
+                                                        <input id="edit-title-${movie.id}" type="text" class="form-control form-control-sm" placeholder="Edit movie title" aria-label="Edit Movie" aria-describedby="basic-addon2">
                                                     </form>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-sm btn-warning">Save changes</button>
+                                                        <button id ="save-changes-btn-${movie.id}" type="button" class="btn btn-sm btn-warning save-changes">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,7 +123,7 @@ getMovies().then(movies => {
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModal${movie.id}Label">Movie Title</h5>
+                                                    <h5 class="modal-title" id="deleteModal${movie.id}Label">${movie.title}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -138,10 +146,6 @@ getMovies().then(movies => {
                 </div>`
     }
     movieHtml += '</div>';
-
-
-
-
 
     $("#movie-div").html(movieHtml);
     renderHeader();
@@ -224,7 +228,12 @@ const renderFooter = () => {
     $("#footer-div").html(footerHtml);
 }
 
+$(".save-changes").click(function(e){
+    editMovie()
+    }
+);
 
 getMovies().then(console.log);
+
 // getSingleMovie(3).then(console.log);
 // editMovie(2).then(console.log);
