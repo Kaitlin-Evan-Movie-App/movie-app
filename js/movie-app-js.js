@@ -12,8 +12,9 @@ const url = "https://absorbed-adaptive-silverfish.glitch.me/movies";
 // }
 
 const getMovies = () => fetch(url)
-    .then(result => result.json())
-    .catch(console.error);
+        .then(result => result.json())
+        .catch(console.error);
+
 
 const getSingleMovie = (id) => fetch(`${url}/${id}`)
     .then(result => result.json())
@@ -63,16 +64,16 @@ getMovies().then(movies => {
     for (let movie of movies) {
         movieHtml += `<div class="col-md-4">
                     <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="`${movies.poster}`" alt="pic">
+                        <img class="card-img-top" src="${movie.poster}" alt="pic">
                         <div class="card-body">
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam at dolorem, eius incidunt molestias odit praesentium repellendus similique temporibus tenetur?</p>
+                            <p class="card-text">${movie.title}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal">View</button>
                                 <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="movieModalLabel">`${movies.title}`</h5>
+                                                <h5 class="modal-title" id="movieModalLabel">${movie.title}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -223,5 +224,5 @@ const renderFooter = () => {
 
 
 getMovies().then(console.log);
-getSingleMovie(3).then(console.log);
+// getSingleMovie(3).then(console.log);
 // editMovie(2).then(console.log);
