@@ -79,8 +79,10 @@ getMovies().then(movies => {
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <h5>This is a movie</h5>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eligendi fugiat in iste tempore. Amet cumque eaque itaque reiciendis reprehenderit?</p>
+                                                <p>Rating: ${movie.rating}</p>
+                                                <p>Year: ${movie.year}</p>
+                                                <p>Directed by: ${movie.director}</p>
+                                                <p>Plot: ${movie.plot}</p>
                                             </div>
                                         </div>
                                     </div>
