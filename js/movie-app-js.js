@@ -1,7 +1,7 @@
 "use strict";
 
 <!--url for Glitch Movie API-->
-const url = "https://absorbed-adaptive-silverfish.glitch.me/movies";
+const url = "https://bolder-voracious-deposit.glitch.me/movies";
 
 // function getMovies(movies) {
 //     const url = "https://absorbed-adaptive-silverfish.glitch.me/movies";
@@ -21,9 +21,8 @@ const getSingleMovie = (id) => fetch(`${url}/${id}`)
     .catch(console.error);
 
 
-
 const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
         "Content-Type": "application/json",
     },
@@ -32,9 +31,25 @@ const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     .then(result => result.json())
     .then(data => {
         console.log(`Success: edited ${JSON.stringify(data)}`);
+        renderMovies();
     })
     .catch(console.error);
 
+
+$(document).on('click', '.save-changes', function () {
+    console.log(this);
+    console.log($(this));
+    let thisId = $(this).data("id");
+    console.log(thisId);
+    let movieObject = {
+        title: $(this).parent().prev().children().val(),
+        id: thisId
+    }
+    console.log("this is how far we've gotten")
+    editMovie(movieObject);
+    $("#editModal" + thisId).modal("toggle");
+    console.log(movieObject);
+})
 
 
 const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
@@ -50,6 +65,14 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     .catch(console.error);
 
 
+$(document).on('click', '.delete-movie', function () {
+    let thisId = $(this).data("id");
+    let movieObject = {
+        id: thisId
+    }
+    deleteMovie(movieObject);
+    $("#deleteModal" + thisId).modal("toggle");
+})
 
 const addMovie = (movie) => fetch(`${url}`, {
     method: "POST",
@@ -63,14 +86,101 @@ const addMovie = (movie) => fetch(`${url}`, {
     })
     .catch(console.error);
 
-
-
 getMovies().then(movies => {
     let movieHtml = '<div class="album py-5 bg-dark">\n' +
         '        <div class="container">\n' +
         '            <div class="row">';
     for (let movie of movies) {
         movieHtml += `<div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="${movie.poster}" alt="pic">
+                        <div class="card-body">
+                            <p class="card-text">${movie.title}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#movieModal${movie.id}">View</button>
+                                <div class="modal fade" id="movieModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="movieModal${movie.id}Label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="movieModal${movie.id}Label">${movie.title}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Rating: ${movie.rating}</p>
+                                                <p>Year: ${movie.year}</p>
+                                                <p>Directed by: ${movie.director}</p>
+                                                <p>Plot: ${movie.plot}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-warning" data-id="${movie.id}" data-toggle="modal" data-target="#editModal${movie.id}">Edit</button>
+                                    <div class="modal fade editModal" id="editModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="editModal${movie.id}Label" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editModal${movie.id}Label">${movie.title}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>See something wrong? Make it right!</p>
+                                                    <form class="input-group">
+                                                        <input id="edit-title-${movie.id}" type="text" class="form-control form-control-sm" placeholder="Edit movie title" aria-label="Edit Movie" aria-describedby="basic-addon2">
+                                                    </form>
+                                                    <div class="modal-footer">
+                                                        <button id ="save-changes-btn-${movie.id}" type="button" class="btn btn-sm btn-warning save-changes" data-id="${movie.id}">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal${movie.id}">Delete</button>
+                                    <div class="modal fade" id="deleteModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="deleteModal${movie.id}Label" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModal${movie.id}Label">${movie.title}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h3 class="text-center">WARNING!!!</h3>
+                                                    <h3 class="text-center">YOU ARE ABOUT TO DELETE THIS ENTRY!</h3>
+                                                    <p class="text-center">You cannot undo this action. Are you sure you wish to continue?</p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-danger delete-movie" data-id="${movie.id}">Delete movie</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+    }
+    movieHtml += '</div>';
+
+    $("#movie-div").html(movieHtml);
+    renderHeader();
+    renderJumbo();
+    renderFooter();
+})
+
+const renderMovies = () => {
+    getMovies().then(movies => {
+        let movieHtml = '<div class="album py-5 bg-dark">\n' +
+            '        <div class="container">\n' +
+            '            <div class="row">';
+        for (let movie of movies) {
+            movieHtml += `<div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" src="${movie.poster}" alt="pic">
                         <div class="card-body">
@@ -144,14 +254,15 @@ getMovies().then(movies => {
                         </div>
                     </div>
                 </div>`
-    }
-    movieHtml += '</div>';
+        }
+        movieHtml += '</div>';
 
-    $("#movie-div").html(movieHtml);
-    renderHeader();
-    renderJumbo();
-    renderFooter();
-})
+        $("#movie-div").html(movieHtml);
+        renderHeader();
+        renderJumbo();
+        renderFooter();
+    })
+}
 
 const renderHeader = () => {
     $("#pageHeader").html("");
@@ -228,12 +339,10 @@ const renderFooter = () => {
     $("#footer-div").html(footerHtml);
 }
 
-$(".save-changes").click(function(e){
-    editMovie()
-    }
-);
 
-getMovies().then(console.log);
+// getMovies().then(console.log);
+// editMovie().then(console.log);
+// renderMovies().then(console.log);
 
 // getSingleMovie(3).then(console.log);
 // editMovie(2).then(console.log);
