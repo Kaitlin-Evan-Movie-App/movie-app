@@ -29,19 +29,15 @@ const editMovie = (movie) => fetch(`${url}/${movie.id}`, {
     .catch(console.error);
 
 
+//Allows user to edit a film title
 $(document).on('click', '.save-changes', function () {
-    console.log(this);
-    console.log($(this));
     let thisId = $(this).data("id");
-    console.log(thisId);
     let movieObject = {
         title: $(this).parent().prev().children().val(),
         id: thisId
     }
-    console.log("this is how far we've gotten")
     editMovie(movieObject);
     $("#editModal" + thisId).modal("toggle");
-    console.log(movieObject);
 })
 
 
@@ -58,6 +54,7 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     .catch(console.error);
 
 
+//Allows user to delete a film from the database
 $(document).on('click', '.delete-movie', function () {
     let thisId = $(this).data("id");
     let movieObject = {
@@ -66,6 +63,7 @@ $(document).on('click', '.delete-movie', function () {
     deleteMovie(movieObject);
     $("#deleteModal" + thisId).modal("toggle");
 })
+
 
 const addMovie = (movie) => fetch(`${url}`, {
     method: "POST",
@@ -78,6 +76,7 @@ const addMovie = (movie) => fetch(`${url}`, {
         console.log(`Success: created ${JSON.stringify(data)}`);
     })
     .catch(console.error);
+
 
 getMovies().then(movies => {
     let movieHtml = '<div class="album py-5 bg-dark">\n' +
@@ -166,6 +165,7 @@ getMovies().then(movies => {
     renderJumbo();
     renderFooter();
 })
+
 
 const renderMovies = () => {
     getMovies().then(movies => {
@@ -257,6 +257,7 @@ const renderMovies = () => {
     })
 }
 
+
 const renderHeader = () => {
     $("#pageHeader").html("");
     let headerHtml = `<div class="collapse bg-dark" id="navbarHeader">
@@ -291,6 +292,7 @@ const renderHeader = () => {
     $("#pageHeader").html(headerHtml)
 }
 
+
 const renderJumbo = () => {
     $("#jumbotron-div").html("");
     let jumboHtml = `<section class="jumbotron text-center bg-warning mb-0">
@@ -304,6 +306,7 @@ const renderJumbo = () => {
     </section>`;
     $("#jumbotron-div").html(jumboHtml);
 }
+
 
 const renderFooter = () => {
     $("#footer-div").html("");
