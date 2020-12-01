@@ -50,6 +50,7 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
     .then(result => result.json())
     .then(() => {
         console.log((`Success: deleted movie with id of ${id}`));
+        renderMovies();
     })
     .catch(console.error);
 
@@ -74,8 +75,22 @@ const addMovie = (movie) => fetch(`${url}`, {
     .then(result => result.json())
     .then(data => {
         console.log(`Success: created ${JSON.stringify(data)}`);
+        renderMovies();
     })
     .catch(console.error);
+
+
+$(document).on("click", "#add-movie-btn", function(){
+    let newTitle = $("#add-new-movie").val();
+    let newRating = $("#add-new-rating").val();
+    let movieObject = {
+        title: newTitle,
+        rating: newRating
+    }
+    console.log(movieObject);
+    addMovie(movieObject);
+
+})
 
 
 getMovies().then(movies => {
@@ -300,8 +315,14 @@ const renderJumbo = () => {
             <h1 class="jumbotron-heading">Movies!!!</h1>
             <p class="lead text-muted">"Photography is truth...and cinema is truth 24 times a second."   --Jean-Luc Godard</p>
             <p>
-                <a href="#" class="btn btn-info my-2">Add a movie!</a>
+                <a href="#" class="btn btn-info my-2" id="add-movie-btn">Add a movie!</a>
             </p>
+            <form class="input-group">
+                 <input id="add-new-movie" type="text" class="form-control form-control-sm" placeholder="Add new movie title" aria-label="add Movie" aria-describedby="basic-addon2">
+            </form>
+            <form class="input-group">
+                 <input id="add-new-rating" type="text" class="form-control form-control-sm" placeholder="Add a rating" aria-label="add Rating" aria-describedby="basic-addon2">
+            </form>
         </div>
     </section>`;
     $("#jumbotron-div").html(jumboHtml);
