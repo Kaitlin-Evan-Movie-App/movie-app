@@ -3,7 +3,6 @@
 <!--url for Glitch Movie API-->
 const url = "https://bolder-voracious-deposit.glitch.me/movies";
 
-
 const getMovies = () => fetch(url)
         .then(result => result.json())
         .catch(console.error);
@@ -70,7 +69,8 @@ const addMovie = (movie) => fetch(`${url}`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-    }
+    },
+    body: JSON.stringify(movie)
 })
     .then(result => result.json())
     .then(data => {
@@ -85,7 +85,7 @@ $(document).on("click", "#add-movie-btn", function(){
     let newRating = $("#add-new-rating").val();
     let movieObject = {
         title: newTitle,
-        rating: newRating
+        rating: newRating,
     }
     console.log(movieObject);
     addMovie(movieObject);
