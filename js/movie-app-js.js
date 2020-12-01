@@ -49,7 +49,7 @@ const deleteMovie = (movie) => fetch(`${url}/${movie.id}`, {
 })
     .then(result => result.json())
     .then(() => {
-        console.log((`Success: deleted movie with id of ${id}`));
+        console.log((`Success: deleted movie with id of ${movie.id}`));
         renderMovies();
     })
     .catch(console.error);
