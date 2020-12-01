@@ -3,13 +3,6 @@
 <!--url for Glitch Movie API-->
 const url = "https://bolder-voracious-deposit.glitch.me/movies";
 
-// function getMovies(movies) {
-//     const url = "https://absorbed-adaptive-silverfish.glitch.me/movies";
-//     return fetch(url)
-//         .then(result => result.json())
-//         .then(console.log)
-//         .catch(console.error);
-// }
 
 const getMovies = () => fetch(url)
         .then(result => result.json())
@@ -206,8 +199,8 @@ const renderMovies = () => {
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal${movie.id}">Edit</button>
-                                    <div class="modal fade" id="editModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="editModal${movie.id}Label" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-warning" data-id="${movie.id}" data-toggle="modal" data-target="#editModal${movie.id}">Edit</button>
+                                    <div class="modal fade editModal" id="editModal${movie.id}" tabindex="-1" role="dialog" aria-labelledby="editModal${movie.id}Label" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -222,7 +215,7 @@ const renderMovies = () => {
                                                         <input id="edit-title-${movie.id}" type="text" class="form-control form-control-sm" placeholder="Edit movie title" aria-label="Edit Movie" aria-describedby="basic-addon2">
                                                     </form>
                                                     <div class="modal-footer">
-                                                        <button id ="save-changes-btn-${movie.id}" type="button" class="btn btn-sm btn-warning save-changes">Save changes</button>
+                                                        <button id ="save-changes-btn-${movie.id}" type="button" class="btn btn-sm btn-warning save-changes" data-id="${movie.id}">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,7 +236,7 @@ const renderMovies = () => {
                                                     <h3 class="text-center">YOU ARE ABOUT TO DELETE THIS ENTRY!</h3>
                                                     <p class="text-center">You cannot undo this action. Are you sure you wish to continue?</p>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-sm btn-danger">Delete movie</button>
+                                                        <button type="button" class="btn btn-sm btn-danger delete-movie" data-id="${movie.id}">Delete movie</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,8 +263,8 @@ const renderHeader = () => {
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-3">
-                    <h4 class="text-white">Movie Company</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolorem esse nostrum placeat quia quo voluptas. Nam perspiciatis ratione saepe!</p>
+                    <h4 class="text-white">K&E Movies</h4>
+                    <p class="text-muted">We're a bunch of film nerds. Let us pass on our recommendations to you! Please. We have no social life.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-3">
                     <h4 class="text-white">Contact</h4>
@@ -303,7 +296,7 @@ const renderJumbo = () => {
     let jumboHtml = `<section class="jumbotron text-center bg-warning mb-0">
         <div class="container-fluid">
             <h1 class="jumbotron-heading">Movies!!!</h1>
-            <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cumque cupiditate esse illo minus nemo nesciunt odit, porro, possimus praesentium quibusdam, repellat tempora. Aut consequuntur ea explicabo maxime nostrum omnis.</p>
+            <p class="lead text-muted">"Photography is truth...and cinema is truth 24 times a second."   --Jean-Luc Godard</p>
             <p>
                 <a href="#" class="btn btn-info my-2">Add a movie!</a>
             </p>
@@ -340,9 +333,3 @@ const renderFooter = () => {
 }
 
 
-// getMovies().then(console.log);
-// editMovie().then(console.log);
-// renderMovies().then(console.log);
-
-// getSingleMovie(3).then(console.log);
-// editMovie(2).then(console.log);
